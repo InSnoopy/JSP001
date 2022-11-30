@@ -10,6 +10,11 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
+  <context-param>
+ 		<param-name>imageFolder</param-name>
+ 		<param-value>d:/contents/images</param-value>
+  </context-param>
+  
   <!-- 이미지 리스트 출력 과제 서블릿 시작 -->
   <servlet>
   	<servlet-name>imageList</servlet-name>

@@ -8,11 +8,14 @@ import java.util.*;
 public class ImageStreamingServlet extends HttpServlet{
 
 	private String imageFolder;
+	private ServletContext application;
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		imageFolder = config.getInitParameter("imageFolder");
+		// imageFolder = config.getInitParameter("imageFolder");
+		application = getServletContext();
+		imageFolder = application.getInitParameter("imageFolder");
 		System.out.printf("받은 파라미터 : %s\n", imageFolder);
 	}
 	
@@ -22,7 +25,7 @@ public class ImageStreamingServlet extends HttpServlet{
 		// 여기에다가 저장하게되면 어플리케이션 모든 범위에 공유 가능
 		ServletContext application = getServletContext(); 
 		
-		String imageName = req.getParameter("image");
+		String imageName = req.getParameter("imgChoice");
 		if(imageName == null || imageName.isEmpty()) {
 			// 상태 코드를 개발자가 임의로 지정 가능
 			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
