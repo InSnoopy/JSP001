@@ -9,47 +9,40 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
   <context-param>
- 		<param-name>imageFolder</param-name>
- 		<param-value>d:/contents/images</param-value>
+    <param-name>imageFolder</param-name>
+    <param-value>d:/contents/images</param-value>
   </context-param>
-  
-  <!-- 이미지 리스트 출력 과제 서블릿 시작 -->
   <servlet>
-  	<servlet-name>imageList</servlet-name>
-  	<servlet-class>kr.or.ddit.servlet01.ImageList</servlet-class>
+    <servlet-name>imageList</servlet-name>
+    <servlet-class>kr.or.ddit.servlet01.ImageList</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>imageList</servlet-name>
-  	<url-pattern>/imageList.do</url-pattern>
+    <servlet-name>imageList</servlet-name>
+    <url-pattern>/imageList.do</url-pattern>
   </servlet-mapping>
-  
-   <servlet>
-  	<servlet-name>imageListServlet</servlet-name>
-  	<servlet-class>kr.or.ddit.servlet01.ImageListServlet</servlet-class>
-	<init-param>
-  		<param-name>imageFolder</param-name>
-  		<param-value>d:/contents/images</param-value>
-  	</init-param>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>imageListServlet</servlet-name>
-  	<url-pattern>/imageListServlet.do</url-pattern>
-  </servlet-mapping>
-  <!-- 이미지 리스트 출력 과제 서블릿 끝 -->
-  
   <servlet>
-  	<servlet-name>ImageStreamingServlet</servlet-name>
-  	<servlet-class>kr.or.ddit.servlet01.ImageStreamingServlet</servlet-class>
-  	<init-param>
-  		<param-name>imageFolder</param-name>
-  		<param-value>d:/contents/images</param-value>
-  	</init-param>
-<!--   	<load-on-startup>1</load-on-startup> -->
+    <servlet-name>imageListServlet</servlet-name>
+    <servlet-class>kr.or.ddit.servlet01.ImageListServlet</servlet-class>
+    <init-param>
+      <param-name>imageFolder</param-name>
+      <param-value>d:/contents/images</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>ImageStreamingServlet</servlet-name>
-  	<url-pattern>/imageStreaming.do</url-pattern>
+    <servlet-name>imageListServlet</servlet-name>
+    <url-pattern>/imageListServlet.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ImageStreamingServlet</servlet-name>
+    <servlet-class>kr.or.ddit.servlet01.ImageStreamingServlet</servlet-class>
+    <init-param>
+      <param-name>imageFolder</param-name>
+      <param-value>d:/contents/images</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ImageStreamingServlet</servlet-name>
+    <url-pattern>/imageStreaming.do</url-pattern>
   </servlet-mapping>
 </web-app>

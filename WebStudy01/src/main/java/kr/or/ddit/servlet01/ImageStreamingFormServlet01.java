@@ -50,6 +50,8 @@ public class ImageStreamingFormServlet01 extends HttpServlet {
       content.append("   </body>       \n");
       content.append("</html>           \n");
       
+      System.out.println(req.getContextPath());
+      
       //try with resource
       try(
          PrintWriter out = resp.getWriter();
