@@ -44,7 +44,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(value="/desc.do", loadOnStartup=1)
 public class DescriptionServlet extends HttpServlet{
-	
+
 	public DescriptionServlet() {
 		super();
 		System.out.printf("%s 생성\n", this.getClass().getName());
