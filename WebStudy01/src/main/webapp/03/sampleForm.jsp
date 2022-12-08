@@ -8,7 +8,7 @@
 </head>
 <body>
 <h4> 입력 양식 </h4>
-<form action="sampleProcess.jsp" method="post" "enctype="multpart/form-data">
+<form action="sampleProcess.jsp" method="post" enctype="multipart/form-data">
 	<input type="text" name="param1" placeholder="param1"/>
 	<input type="text" name="param2" placeholder="param2"/>
 	<input type="text" name="param2" placeholder="param3"/>

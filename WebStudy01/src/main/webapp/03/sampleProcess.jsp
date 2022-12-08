@@ -16,13 +16,13 @@
 <body>
 	request line : <%=request.getRequestURL() %> <br>
 	request line->query String : <%=request.getQueryString() %> <br>
-	request body : <%=request.getInputStream().available() %>
+ 	request body : <%=request.getInputStream().available() %><br> 
 	
-	표준 입력양식(form)을 통해 입력된 파라미터 확보
-	String getParameter(name)
-	String[] getParameterValues(name)
-	Enumeration&lt;String&gt; emgetParameterNames()
-	Map&lt;String, String[]gt;getParameterMap();
+	표준 입력양식(form)을 통해 입력된 파라미터 확보<br>
+	String getParameter(name)<br>
+	String[] getParameterValues(name)<br>
+	Enumeration&lt;String&gt; emgetParameterNames()<br>
+	Map&lt;String, String[]gt;getParameterMap();<br>
 <table>
 	<thead>
 		<tr>
