@@ -11,7 +11,8 @@ public class PropertiesServiceImpl implements PropertiesService {
 	public Properties retrieveData() {
 		Properties properties = new Properties();
 		try(
-			InputStream is = DescriptionServlet.class.getResourceAsStream("/kr/or/ddit/props/DataStore.properties");
+//			InputStream is = DescriptionServlet.class.getResourceAsStream("/kr/or/ddit/props/DataStore.properties");
+			InputStream is = DescriptionServlet.class.getResourceAsStream("/kr/or/ddit/props/Message_en.properties");
 		){
 			properties.load(is);
 		}catch (Exception e) {

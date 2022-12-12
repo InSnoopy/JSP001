@@ -41,15 +41,16 @@
 	}
 	let sucesses = {
 		json:function(resp){
+			console.log(resp.target);
 			let trTags = [];
-			$.each(resp, function(name, value){
+			$.each(resp.target, function(name, value){
 				trTags.push(makeTrTag(name, value));
 			});
 			listBody.empty();
 			listBody.append(trTags);
 		},
 		xml:function(domResp){
-			let root = $(domResp).find("Properties");
+			let root = $(domResp).find("target");
 			let trTags = [];
 			root.children().each(function(idx, child){
 				let name = child.tagName;
