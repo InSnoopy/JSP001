@@ -8,17 +8,7 @@
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/jquery-3.6.1.min.js"></script>
 </head>
 <body>
-
-<!-- <input type="radio" name="data"  data-data-key="prop1" checked/>prop1 -->
-<!-- <input type="radio" name="data"  data-data-key="prop2"/>prop2 -->
-<!-- <input type="radio" name="data"  data-data-key="prop3"/>prop3 -->
-<!-- <input type="radio" name="data"  data-data-key="prop4"/>prop4 -->
-<!-- <input type="radio" name="data"  data-data-key="prop5"/>prop5 -->
-<!-- <input type="radio" name="data"  data-data-key="hi"/>hi -->
-
-<select id="selName" onchange="f_changeFunc(this)">
-
-</select>
+<select id="selName" onchange="f_changeFunc(this)"></select>
 
 
 <br>
@@ -40,12 +30,8 @@
 			$.each(resp.target, function(name, value){
 				x += "<option value="+name+">"+name+"</option>"
 			});
-			
-
-
 			console.log("html",x);
 			document.querySelector("#selName").innerHTML = x;
-
 		}
 	}
 
