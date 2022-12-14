@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" buffer="8kb"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,6 +63,7 @@
 		
 	3. Response Body(Content body, message body) : 
 <%-- 		response.getWriter(), response.getOutputStream(), <%= %>, out <!-- steam을 이용해서 body에 작성함 --> --%>
+<%--8kbyte 짜리 버퍼를 사용하고 있다?? ->buffer="8kb"--%>
 </pre>
 </body>
 </html>
