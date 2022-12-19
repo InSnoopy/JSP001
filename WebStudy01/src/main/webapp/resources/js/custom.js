@@ -38,3 +38,7 @@ $.fn.log=function(){
 	console.log(data);
 	return this;
 }
+
+
+
+
