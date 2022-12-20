@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>88/sessionDesc.jsp</title>
-<script src="<%=request.getContextPath() %>/resources/js/jquery-3.6.1.min.js"></script>
+<jsp:include page="/includee/preScript.jsp" />
 <script type="text/javascript" src="<%=request.getContextPath() %>/resources/js/custom.js"></script>
 </head>
 <body>
@@ -34,40 +34,25 @@
 	종료(만료)
 		1) 세션의 아이디가 재전송되지 않을때. ex) 세션과 관련된 쿠키 삭제
 		2) 브라우저가 종료될때
+			-> 종료하고 다음 요청이 없을 시 만료된다. ( session timeout 설정된 값 )
 		3) session timeout 이내에 새로운 요청을 통해 아이디가 재전송되지 않을때.
 		4) session invalidation(명시적인 로그아웃)
+			-> 이것만 그 즉시 세션이 해지된다. 나머지는 아니다.
 
 </pre>
+<div id="msgArea">
+	세션을 연장하겠습니까?
+	<input type="button" value="예" class="controlBtn" id="YES"/>
+	<input type="button" value="아니오" class="controlBtn" id="NO"/>
+</div>
 <script>
-
-	let obj_timerArea = $("#timerArea");
-	let y = <%=session.getMaxInactiveInterval() %>
-	
-	let timeCount = function(){
-		let x
-		y--;
-		obj_timerArea.html("<p>"+y+"</p>")
-	    if(y==60){
-	    	x = confirm("60초 남았습니다. 연장하시겠습니까?");
-	    	console.log(x);
-	    }
-		if(x==true){
-			y+=60;			
-		}
-		if(y<=0){
-			session.invalidate();
-			return;
-		}
-	};
-	
-	$.fn.sessionTimer=function(time){
-	    setInterval(timeCount, 1000);
-		return this;
-	}
-	
-	let x = $("#timerArea").sessionTimer(y);
-
-	
+	// jquery는 필수 파라미터와 옵셔널 파라미터를 설정해줘야 한다.
+	// 옵셔널인 경우 [] 안에 작성한다.
+	$("#timerArea").sessionTimer(${ pageContext.session.maxInactiveInterval }, {
+		msgAreaSelector : "#msgArea", 
+		btnSelector : ".controlBtn"
+	});
 </script>
+<jsp:include page="/includee/postScript.jsp" />
 </body>
 </html>

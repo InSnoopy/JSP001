@@ -39,6 +39,81 @@ $.fn.log=function(){
 	return this;
 }
 
+$.fn.sessionTimer=function(timeout, msgObj){
+	if(!timeout)
+		throw Error("세션 타임아웃 값이 없음."); // 에러 처리
+	
+// $(".controlBtn").on("click", ) -> event 선택법
+// 자식 이벤트가 발생되면 부모가 전파된다. 이걸 버블링이라고 한다. 
+// 결국 맨 마지막은 body(document)이다.
+
+// event propagation : bubbling 방식
+// $(document).on("click", ".controlBtn", function(){ // document 전체에서 찾고 .controlBtn을 클릭했을 때	
+// });
+	
+	const SPEED = 100;
+	const TIMEOUT = timeout;
+	const timerArea = this; // $("#timerArea")
+	
+	let msgArea = null;
+	
+	if(msgObj){
+		msgArea = $(msgObj.msgAreaSelector).on("click", msgObj.btnSelector ,function(event){
+			// console.log(this.id + ", " + $(this).prop("id"));
+			if(this.id=="YES"){
+				jobClear();
+				timerInit();
+				$.ajax({ // 서버 session을 유지하기 위해 요청만 한다.
+					method : "head",
+				});
+			}
+			msgArea.hide();
+		}).hide();		
+	}
+	// 자바스크립트에서는 
+	// 1. 주기적인 함수 - setInterval
+	// 2. 지연 함수 - setTimeout
+	
+	// 전역변수로 timerJob 이런걸 사용 가능하지만 data로도 사용가능하다.
+	let jobClear = function(){
+		let timerJob = timerArea.data("timerJob");
+		if(timerJob)
+			clearInterval(timerJob);
+		let msgJob = msgArea.data('msgJob');
+		if(msgJob)
+			clearTimeout(msgJob);
+	}
+	
+	let timerInit = function(){
+		if(msgObj){
+			let msgJob = setTimeout(() => {
+				msgArea.show();
+			}, (TIMEOUT-60)*SPEED); // 단위가 밀리센컨드이기 때문에 천을 곱함
+			msgArea.data('msgJob', msgArea); // data 숨겨놓기 기능			
+		}
+		
+		let timer = TIMEOUT;
+		let timerJob = setInterval(() => {
+			if(timer==1){				
+				clearInterval(timerJob);
+				location.reload(); // location 객체
+			}else
+				timerArea.html( timeFormat(--timer) ); // 이렇게 timerArea을 선언하고 쓰면 스크립트 과부하를 줄인다.
+		}, SPEED);
+		timerArea.data("timerJob", timerJob);
+	}
+	
+	timerInit();
+	
+	let timeFormat = function(time){
+		let min = Math.trunc( time / 60 ); // 동적 타입 언어에서는 연산자에 요소에 따라 타입이 정해진다.
+										   // 정적 타입 언어에서는 연산 전에 타입을 지정해줘야 한다.
+		let sec = time % 60;
+		return min + ":" + sec;
+	}
+	
+	return this;
+}
 
 
 
