@@ -9,6 +9,7 @@
     <param-name>imageFolder</param-name>
     <param-value>d:/contents/images</param-value>
   </context-param>
+  
   <servlet>
     <servlet-name>imageList</servlet-name>
     <servlet-class>kr.or.ddit.servlet01.ImageList</servlet-class>
