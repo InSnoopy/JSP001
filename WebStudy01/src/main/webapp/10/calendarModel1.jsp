@@ -31,10 +31,6 @@
 <c:set var="dayCount" value="1"/>
 <c:set var="offset" value="${week-1 }" />
 
-
-
-
-
 <table>
 <thead>
 	<tr>
