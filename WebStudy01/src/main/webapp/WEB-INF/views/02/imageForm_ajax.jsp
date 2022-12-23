@@ -1,6 +1,7 @@
 <%@page import="java.io.File"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +25,8 @@
 </head>
 <body>
 
+<c:set var="saveImg" value="${cookie['saveImg']['value'] }"/>
+
    <form name="imgForm" action='<%=request.getContextPath() %>/imageStreaming.do'>
    <select name='imgChoice'>
 	
@@ -41,7 +44,7 @@
 			let option = $(this).find("option:selected");
 			let mime = option.attr("class");
 			let clzName = matchedClass(mime);
-			console.log($(this).value)
+			console.log(option);
 			$(this).removeClass(colors);
 			$(this).addClass(clzName);
 			
@@ -52,8 +55,9 @@
 			
 			let img = $("<img>").attr("src", src);
 			DIVTAG.html(img);
-
+			
 		});
+		
 		const changeCondition = {
 			jpeg:"red",
 			png:"green",
@@ -87,7 +91,11 @@
 					let option = $("<option>").addClass(file.mime).html(file.name);
 					options.push(option);
 				});
-				SELECTTAG.append(options);				
+				SELECTTAG.append(options);
+				<c:if test="${not empty cookie['imageCookie']}">
+					SELECTTAG.val("${cookie['imageCookie']['value']}");
+					SELECTTAG.trigger('change');
+				</c:if>
 			},
 			error : function(jqXHR, status, error) {
 				console.log(jqXHR);

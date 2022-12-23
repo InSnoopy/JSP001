@@ -22,10 +22,11 @@
 	<form method="post" action="<c:url value='/login/loginProcess.do' />">
 		<ul>
 			<li>
+				<c:set var="saveId" value="${cookie['savedId']['value'] }" />
 				<!-- param이 있는 이유는 포어드 방식이 req.getRequestDispatcher(viewName).forward(req, resp); 이거이기 때문이다. -->
 				<!-- 파라미터를 아직 기억하고 있다. -->
-				<input type="text" name="memId" placeholder="아이디" value="${validId }"/>
-				<input type="checkbox" name="saveId" />아이디기억하기
+				<input type="text" name="memId" placeholder="아이디" value="${not empty validId ? validId : saveId}"/>
+				<input type="checkbox" name="saveId" ${not empty saveId ? 'checked' : '' }/>아이디기억하기
 				<!-- 위에 validId를 session에 저장되어 있으니 반드시remove로 지워주자 -->
 				<c:remove var="validId" scope="session"/>
 			</li>

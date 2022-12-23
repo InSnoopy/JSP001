@@ -2,6 +2,9 @@ package kr.or.ddit.servlet01;
 
 import java.io.*;
 import javax.servlet.http.*;
+
+import org.apache.commons.lang3.StringUtils;
+
 import javax.servlet.*;
 import java.util.*;
 
@@ -17,6 +20,7 @@ public class ImageStreamingServlet extends HttpServlet{
 		application = getServletContext();
 		imageFolder = application.getInitParameter("imageFolder");
 		System.out.printf("받은 파라미터 : %s\n", imageFolder);
+		  
 	}
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
@@ -24,6 +28,19 @@ public class ImageStreamingServlet extends HttpServlet{
 		// 이 객체는 싱글톤 (가장 먼저 생성되고 가장 오래 살아남는 객체, 가장 범위가 넓은 저장소)
 		// 여기에다가 저장하게되면 어플리케이션 모든 범위에 공유 가능
 		ServletContext application = getServletContext(); 
+		
+		
+//		String saveImg = req.getParameter("imgChoice");
+//		Cookie saveImgCookie = new Cookie("saveImg", saveImg);
+//		saveImgCookie.setDomain("localhost");
+//		saveImgCookie.setPath(req.getContextPath());
+//		int maxAge = 0;
+//		if(StringUtils.isNotBlank(saveImg)) {
+//			maxAge = 60*60*24*5;
+//		}
+//		saveImgCookie.setMaxAge(maxAge);
+//		resp.addCookie(saveImgCookie);
+		
 		
 		String imageName = req.getParameter("imgChoice");
 		if(imageName == null || imageName.isEmpty()) {
@@ -39,6 +56,12 @@ public class ImageStreamingServlet extends HttpServlet{
 			resp.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
+		
+		Cookie imageCookie = new Cookie("imageCookie", imageName);
+		imageCookie.setDomain("localhost");
+		imageCookie.setPath(req.getContextPath());
+		imageCookie.setMaxAge(60*60*24*5);
+		resp.addCookie(imageCookie);
 		
 		FileInputStream fis = null;
 		OutputStream os = null;

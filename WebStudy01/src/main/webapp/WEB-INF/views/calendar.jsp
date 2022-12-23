@@ -15,6 +15,7 @@
 <jsp:include page="/includee/preScript.jsp"/>
 </head>
 <body>
+
 <c:set var="dayCount" value="1"/>
 <c:set var="offset" value="${calendar.offset }" /> 
 <c:set var="lastDate" value="${calendar.lastDate }" /> 
@@ -83,7 +84,7 @@
 	</c:forEach>
 </table>
 <script type="text/javascript">
-	let calendarForm = $("#calendarForm")
+	let calendarForm = $("#calendarForm");
 	$("a.moveBtn").on("click",function(event){
 		let year = $(this).data("year");
 		let month = $(this).data("month");

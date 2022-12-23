@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
+import kr.or.ddit.memo.dao.DataBaseMemoDAOImpl;
 import kr.or.ddit.memo.dao.FileSystemMemoDAOImpl;
 import kr.or.ddit.memo.dao.MemoDAO;
 import kr.or.ddit.vo.MemoVO;
@@ -21,7 +22,10 @@ import kr.or.ddit.vo.MemoVO;
 @WebServlet("/memo")
 public class MemoControllerServlet extends HttpServlet{
 	
-	private MemoDAO dao = FileSystemMemoDAOImpl.getInstance();
+	// private MemoDAO dao = FileSystemMemoDAOImpl.getInstance();
+	private MemoDAO dao = DataBaseMemoDAOImpl.getInstance();
+	// 객체 생성에 대한 의존방식 컨테이너가 필요하다. (이것이 스프링) 구현체에 대한 이름이 없다.
+	// private MemoDAO dao;
 	
 
 	@Override
@@ -34,6 +38,7 @@ public class MemoControllerServlet extends HttpServlet{
 			return;
 		}
 		//2.모델 확보
+//		List<MemoVO> listMemo = dao.selectMemoList();
 		List<MemoVO> listMemo = dao.selectMemoList();
 		//3.모델 공유 (setAttribute)
 		req.setAttribute("listMemo", listMemo);

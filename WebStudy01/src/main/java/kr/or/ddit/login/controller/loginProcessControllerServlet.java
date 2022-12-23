@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,6 +44,7 @@ public class loginProcessControllerServlet extends HttpServlet{
 		}
 		String memId = req.getParameter("memId");
 		String memPass = req.getParameter("memPass");
+		String saveId = req.getParameter("saveId");
 
 		// 파라미터에 들어오는 값(memId)이랑 setMemId와가 너무 비슷하다.
 		// BeanUtils (자바빈을 뜻한다.) : 자바빈의 규약을 지킨 것만 이 라이브러리를 사용 가능했다. 중프때 쓴거.
@@ -56,6 +58,17 @@ public class loginProcessControllerServlet extends HttpServlet{
 		if(valid) {
 		// 2.
 			if(authenticate(member)) {
+				Cookie saveIdCookie = new Cookie("savedId", member.getMemId());
+				// ex) www[blog].naver.com
+				// 로그인 같은 경우 모든 호스트에 공통적으로 재전송이 가능해야한다.
+				saveIdCookie.setDomain("localhost");
+				saveIdCookie.setPath(req.getContextPath());
+				int maxAge = 0;
+				if(StringUtils.isNotBlank(saveId)) {
+					maxAge = 60*60*24*5;
+				}
+				saveIdCookie.setMaxAge(maxAge);
+				resp.addCookie(saveIdCookie);
 				// authMember로 flash가 아닌 계속 유지되게 해야된다.
 				// authMember로 약속한거다. 이게 있다면 로그인 한 사람을 뜻한다.
 				session.setAttribute("authMember", member);

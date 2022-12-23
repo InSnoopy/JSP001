@@ -21,7 +21,7 @@ public class ImageStreamingFormServlet03 extends HttpServlet{
    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //       application.getMimeType(arg0)
       String imageFolder = getServletContext().getInitParameter("imageFolder");
-      
+
       
       File folder = new File(imageFolder);
       File[] imageFiles = folder.listFiles((dir,name)->{
