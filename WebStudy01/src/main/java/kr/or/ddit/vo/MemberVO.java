@@ -18,9 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  * 		객체의 상태에서 노출되면 안되는 데이터도 있다.
  * 6. 객체 직렬화 가능 ( implements Serializable)
  * 
- * 
- * 
- * 
+ * 회원관리를 위한 Domain Layer
  */
 public class MemberVO implements Serializable{
 	// memId가 아니라 MemId라면??
