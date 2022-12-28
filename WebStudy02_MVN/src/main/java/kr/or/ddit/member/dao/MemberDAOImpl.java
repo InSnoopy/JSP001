@@ -53,14 +53,24 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public int updateMember(MemberVO member) {
-		// TODO Auto-generated method stub
-		return 0;
+			// 트랜잭션 시작
+		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
+			MemberDAO mapperProxy = sqlSession.getMapper(MemberDAO.class);
+			int cnt = mapperProxy.updateMember(member);
+			// 트랜잭션 종료
+			sqlSession.commit();
+			return cnt;
+		}
 	}
 
 	@Override
 	public int deleteMember(String memId) {
-		// TODO Auto-generated method stub
-		return 0;
+		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
+			MemberDAO mapperProxy = sqlSession.getMapper(MemberDAO.class);
+			int cnt = mapperProxy.deleteMember(memId);
+			sqlSession.commit();
+			return cnt;
+		}
 	}
 
 }

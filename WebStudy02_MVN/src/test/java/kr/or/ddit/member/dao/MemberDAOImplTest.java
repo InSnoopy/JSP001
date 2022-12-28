@@ -50,7 +50,7 @@ public class MemberDAOImplTest {
 
 	@Test
 	public void testDeleteMember() {
-		fail("Not yet implemented");
+		dao.deleteMember("a002");
 	}
 
 }

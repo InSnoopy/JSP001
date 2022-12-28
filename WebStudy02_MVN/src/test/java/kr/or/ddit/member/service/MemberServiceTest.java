@@ -17,7 +17,8 @@ public class MemberServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		member = new MemberVO();
-		member.setMemId("a001");
+		member.setMemId("a002");
+		member.setMemPass("java");
 	}
 
 //	@Test
@@ -47,7 +48,7 @@ public class MemberServiceTest {
 
 //	@Test
 	public void testRemoveMember() {
-		fail("Not yet implemented");
+		ServiceResult result = service.removeMember(member);
 	}
 
 }

@@ -8,8 +8,9 @@
 <!-- authMember의 값이 있다면 로그인이 되어있는 상태를 말한다. -->
 <c:choose>
 	<c:when test="${not empty sessionScope.authMember }">
+		<a href="<c:url value='/mypage.do' />">${authMember.memName }님</a>
 		<form name="logoutForm" action="<c:url value='/login/logout.do'/>" method="post"></form>
-		<a href="#" class="logoutBtn">${authMember.memName } 님 로그아웃</a>
+		<a href="#" class="logoutBtn">로그아웃</a>
 		<script>
 			$(".logoutBtn").on("click", function(event){
 				// a클릭은 자동으로 submit이 발생한다?

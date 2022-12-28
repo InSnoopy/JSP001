@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,6 +89,18 @@
 			<th>탈퇴여부</th>
 			<td>${member.memDelete}</td>
 		</tr>
+		<c:if test="${sessionScope.authMember eq member }">
+			<tr>
+				<td colspan="2">
+					<a href="<c:url value='/member/memberUpdate.do'/>" class="btn btn-primary">수정</a>
+					<a href="" class="btn btn-danger">탈퇴</a>
+					<form method="post" action="<c:url value='/member/memberDelete.do'/>">
+						<input type="password" name="memPass" />
+						<button>버튼</button>
+					</form>
+				</td>
+			</tr>
+		</c:if>
 	</thead>
 
 </table>

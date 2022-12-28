@@ -2,7 +2,21 @@ package kr.or.ddit.vo;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import javax.validation.groups.Default;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import kr.or.ddit.validate.DeleteGroup;
+import kr.or.ddit.validate.InsertGroup;
+import kr.or.ddit.validate.UpdateGroup;
 
 /**
  * VO(Value Object), DTO(Data Transfer Object), JavaBean, Model 
@@ -23,26 +37,39 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class MemberVO implements Serializable{
 	// memId가 아니라 MemId라면??
 	// 무조건 소문자로 만들면 기본 get,set이랑 차이가 없다.
+	// DB의 구조를 확인하고 넣어야한다.
+	@NotBlank(groups= {Default.class, DeleteGroup.class}, message="아이디는 필수")
 	private String memId;
+	@NotBlank(groups= {Default.class, DeleteGroup.class})
+	@Size(min=4, max=8, groups= {Default.class, DeleteGroup.class})
 	@JsonIgnore // 직렬화, 마샬링할 떄 다 대상이 안된다.
 	private transient String memPass;
+	@NotBlank
 	private String memName;
 	@JsonIgnore
 	private transient String memRegno1;
 	@JsonIgnore
 	private transient String memRegno2;
+	@Pattern(regexp="\\d{4}-\\d{2}-\\d{2}", groups=InsertGroup.class)
+	@NotBlank(groups=InsertGroup.class)
 	private String memBir;
+	@NotBlank
 	private String memZip;
+	@NotBlank
 	private String memAdd1;
+	@NotBlank
 	private String memAdd2;
 	private String memHometel;
 	private String memComtel;
 	private String memHp;
+	@Email
 	private String memMail;
 	private String memJob;
 	private String memLike;
 	private String memMemorial;
+	@Pattern(regexp="\\d{4}-\\d{2}-\\d{2}")
 	private String memMemorialday;
+	@Min(0)
 	private Integer memMileage;
 	private String memDelete;
 	public String getMemId() {
