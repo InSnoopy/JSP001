@@ -41,6 +41,7 @@ public class MemberDAOImplTest {
 	public void testSelectMember() {
 		MemberVO member = dao.selectMember("a001");
 		System.out.println(member);
+		member.getProdList().stream().forEach(System.out::println);
 	}
 
 	@Test
@@ -50,7 +51,9 @@ public class MemberDAOImplTest {
 
 	@Test
 	public void testDeleteMember() {
-		dao.deleteMember("a002");
+		int rowcnt = dao.deleteMember("a002");
+		// 내가 생각한 값이 1, 우측이랑 맞으면
+		assertEquals(1, rowcnt);
 	}
 
 }

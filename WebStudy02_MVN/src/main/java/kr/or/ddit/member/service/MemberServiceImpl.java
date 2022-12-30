@@ -63,28 +63,18 @@ public class MemberServiceImpl implements MemberService {
       return result;
    }
 
-	@Override
-	public ServiceResult removeMember(MemberVO member) {
-		// 존재 부(NOTEXIST), 비번 인증 실패(INVALIDPASSWORD), 성공(OK), 실패(FAIL)
-		ServiceResult result = null;
-		
-		String memPass = member.getMemPass();
-		MemberVO member2 = retriveMember(member.getMemId());
-		
-		if(!(memPass.equals(member2.getMemPass()))) {
-			result = ServiceResult.INVALIDPASSWORD;
-		}else if(memPass.equals(member2.getMemPass())){
-			int cnt = memberDAO.deleteMember(member.getMemId());
-			if(cnt>0) {					
-				result = ServiceResult.OK;				
-			}else {
-				result = ServiceResult.FAIL;					
-			}
-		}else {								
-			result = ServiceResult.PKDUPLICATED;
-		}
-		
-		return result;
-	}
+   @Override
+   public ServiceResult removeMember(MemberVO member) {
+      //있나없나 비번인증 통과후 삭제 처리 
+      //인증과 관련된 코드를 따로 빼놔서 여기는 수정을 안해도됨. 
+      ServiceResult result = authService.authenticate(member);
+      
+      if(ServiceResult.OK.equals(result)) {
+         int rowcnt = memberDAO.deleteMember(member.getMemId());
+         result = rowcnt > 0 ? ServiceResult.OK : ServiceResult.FAIL;
+      }
+      return result;
+   }
+
 
 }

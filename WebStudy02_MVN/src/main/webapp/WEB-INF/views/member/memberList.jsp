@@ -20,6 +20,7 @@
 			<th>휴대폰</th>
 			<th>거주지역</th>
 			<th>마일리지</th>
+			<th>구매건수</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -38,12 +39,13 @@
 						<td>${memberVO.memHp }</td>
 						<td>${memberVO.memAdd1 }</td>
 						<td>${memberVO.memMileage }</td>
+						<td>${memberVO.cartCount }</td>
 					</tr>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
 				<tr>
-					<td colspan="6">조건에 맞는 회원이 없음.</td>
+					<td colspan="7">조건에 맞는 회원이 없음.</td>
 				</tr>
 			</c:otherwise>
 		</c:choose>

@@ -16,7 +16,8 @@ public class AuthenticateServiceImpl implements AuthenticateService {
 	@Override
 	public ServiceResult authenticate(MemberVO member) {
 		MemberVO savedMember = memberDAO.selectMember(member.getMemId());
-		if(savedMember==null)
+		// savedMember.getMemDelete()!=null 이걸 추가함으로써 delete에 1인 유저는 로그인을 못한다.
+		if(savedMember==null || savedMember.isMemDelete()) // null거나 true -> boolean 타입이면 isMemDelete()로 비교해야한다.
 			throw new UserNotFoundException(String.format("%s 사용자 없음.", member.getMemId()));
 		String inputPass = member.getMemPass();
 		String savedPass = savedMember.getMemPass();
