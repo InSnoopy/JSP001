@@ -75,6 +75,8 @@ public class MemberVO implements Serializable{
 		this.memPass = memPass;
 	}
 	
+	// 총 member인원
+	private int rnum;
 	// memId가 아니라 MemId라면??
 	// 무조건 소문자로 만들면 기본 get,set이랑 차이가 없다.
 	// DB의 구조를 확인하고 넣어야한다.

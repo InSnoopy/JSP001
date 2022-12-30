@@ -9,46 +9,37 @@
 <jsp:include page="/includee/preScript.jsp" />
 </head>
 <body>
-<h4>회원목록 조회</h4>
-
 <table>
 	<thead>
 		<tr>
 			<th>일련번호</th>
-			<th>회원아이디</th>
-			<th>회원명</th>
-			<th>이메일</th>
-			<th>휴대폰</th>
-			<th>거주지역</th>
-			<th>마일리지</th>
-			<th>구매건수</th>
+			<th>상품분류</th>
+			<th>상품명</th>
+			<th>거래처명</th>
+			<th>구매가</th>
+			<th>판매가</th>
+			<th>상품구매자수</th>
 		</tr>
 	</thead>
 	<tbody>
 		<c:set var="list" value="${pagingVO.dataList }" />
 		<c:choose>
 			<c:when test="${not empty list }">
-				<c:forEach items="${list }" var="memberVO">
+				<c:forEach items="${list }" var="ProdVO">
 					<tr>
-						<td>${memberVO.rnum }</td>
-						<td>${memberVO.memId }</td>
-						<td>
-							<c:url value="/member/memberView.do" var="viewURL">
-								<c:param name="who" value="${memberVO.memId }"></c:param>
-							</c:url>
-							<a href="${viewURL }">${memberVO.memName }</a>
-						</td>
-						<td>${memberVO.memMail }</td>
-						<td>${memberVO.memHp }</td>
-						<td>${memberVO.memAdd1 }</td>
-						<td>${memberVO.memMileage }</td>
-						<td>${memberVO.cartCount }</td>
+						<td>${ProdVO.prodId }</td>
+						<td>${ProdVO.lprodNm }</td>
+						<td>${ProdVO.prodName }</td>
+						<td>${ProdVO.buyer.buyerName }</td>
+						<td>${ProdVO.prodCost }</td>
+						<td>${ProdVO.prodSale }</td>
+						<td>${ProdVO.cartCount }</td>
 					</tr>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
 				<tr>
-					<td colspan="7">조건에 맞는 회원이 없음.</td>
+					<td colspan="7">조건에 맞는 상품이 없음.</td>
 				</tr>
 			</c:otherwise>
 		</c:choose>
@@ -60,8 +51,9 @@
 				<div id="searchUI">
 					<select name="searchType">
 						<option value>전체</option>
-						<option value="name">이름</option>
-						<option value="address">주소1</option>
+						<option value="lprodNm">분류명</option>
+						<option value="buyerName">거래처명</option>
+						<option value="prodName">상품명</option>
 					</select>
 					<input type="text" name="searchWord" />
 					<input type="button" id="searchBtn" value="검색" />
@@ -102,6 +94,7 @@
 		return false;
 	});
 </script>
+
 <jsp:include page="/includee/postScript.jsp" />
 </body>
 </html>

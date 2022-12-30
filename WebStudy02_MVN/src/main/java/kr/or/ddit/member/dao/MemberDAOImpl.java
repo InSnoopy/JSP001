@@ -14,6 +14,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import kr.or.ddit.memo.dao.MemoDAO;
 import kr.or.ddit.mybatis.MybatisUtils;
 import kr.or.ddit.vo.MemberVO;
+import kr.or.ddit.vo.PagingVO;
 
 public class MemberDAOImpl implements MemberDAO {
 	
@@ -31,13 +32,21 @@ public class MemberDAOImpl implements MemberDAO {
 
 	}
 	
-
 	@Override
-	public List<MemberVO> selectMemberList() {
+	public int selectTotalRecord(PagingVO<MemberVO> pagingVO) {
+		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
+			MemberDAO mapperProxy = sqlSession.getMapper(MemberDAO.class);
+			return mapperProxy.selectTotalRecord(pagingVO);
+		}
+	}
+	
+	
+	@Override
+	public List<MemberVO> selectMemberList(PagingVO<MemberVO> pagingVO) {
 
 		try (SqlSession sqlSession = sqlSessionFactory.openSession();) {
 			MemberDAO mapperProxy = sqlSession.getMapper(MemberDAO.class);
-			return mapperProxy.selectMemberList();
+			return mapperProxy.selectMemberList(pagingVO);
 		}
 	}
 

@@ -15,6 +15,10 @@ import lombok.ToString;
 @EqualsAndHashCode(of="prodId")
 @ToString(exclude="predDetail") // predDetail은 길 수 있기에.. 빼논다.
 public class ProdVO implements Serializable{
+	
+	// 총 prod갯수
+	private int rnum;
+	
 	private String prodId;
 	private String prodName;
 	
@@ -23,7 +27,7 @@ public class ProdVO implements Serializable{
 	
 	private String prodBuyer;
 	private BuyerVO buyer; // has a
-	
+
 	private Integer prodCost;
 	private Integer prodPrice;
 	private Integer prodSale;
@@ -43,4 +47,5 @@ public class ProdVO implements Serializable{
 	
 	// 구매한 회원의 아이디가 중복되지 않게 set사용
 	private Set<MemberVO> memberSet; // has many
+	private int cartCount;
 }
