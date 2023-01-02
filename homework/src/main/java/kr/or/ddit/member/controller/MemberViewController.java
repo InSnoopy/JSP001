@@ -1,0 +1,39 @@
+package kr.or.ddit.member.controller;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
+
+import kr.or.ddit.member.service.MemberService;
+import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.mvc.view.AbstractController;
+import kr.or.ddit.vo.MemberVO;
+
+public class MemberViewController implements AbstractController{
+//	의존관계 형성
+	private MemberService service = new MemberServiceImpl();
+	
+	@Override
+	public String process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		1. 요청 분석 (검증)
+		String memId = req.getParameter("who");
+		if(StringUtils.isBlank(memId)) {
+			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			return null;
+		}
+//		2. 모델 확보
+		MemberVO member = service.retriveMember(memId);
+//		3. 모델 공유
+		req.setAttribute("member", member);
+//		4. 뷰 선택
+		String viewName = "/WEB-INF/views/member/memberView.jsp";
+
+		return viewName;
+	}
+}
