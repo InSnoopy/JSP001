@@ -20,11 +20,15 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import kr.or.ddit.memo.dao.DataBaseMemoDAOImpl;
 import kr.or.ddit.memo.dao.MemoDAO;
 import kr.or.ddit.memo.dao.MemoDAOImpl;
+import kr.or.ddit.mvc.annotation.RequestMethod;
+import kr.or.ddit.mvc.annotation.resolvers.RequestParam;
+import kr.or.ddit.mvc.annotation.stereotype.Controller;
+import kr.or.ddit.mvc.annotation.stereotype.RequestMapping;
 import kr.or.ddit.vo.MemoVO;
 
-@WebServlet("/memo")
-public class MemoControllerServlet extends HttpServlet {
-	private static final Logger log = LoggerFactory.getLogger(MemoControllerServlet.class);
+@Controller
+public class MemoController{
+	private static final Logger log = LoggerFactory.getLogger(MemoController.class);
 	
 	// private MemoDAO dao = FileSystemMemoDAOImpl.getInstance();
 	// private MemoDAO dao = DataBaseMemoDAOImpl.getInstance();
@@ -32,51 +36,34 @@ public class MemoControllerServlet extends HttpServlet {
 	// private MemoDAO dao;
 	private MemoDAO dao = new MemoDAOImpl();
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// 1.요청분석
+	@RequestMapping("/memo")
+	public String doGet(
+//			@RequestHeader("Accept") String accept,
+			HttpServletRequest req, 
+			HttpServletResponse resp
+		) throws ServletException, IOException {
+
 		String accept = req.getHeader("Accept");
 		log.info("accept header : {}", accept);
 		System.out.println(accept);
 		if (accept.contains("xml")) {
 			resp.sendError(HttpServletResponse.SC_NOT_ACCEPTABLE);
-			return;
-		}
-		// 2.모델 확보
-//		List<MemoVO> listMemo = dao.selectMemoList();
-		List<MemoVO> listMemo = dao.selectMemoList();
-		// 3.모델 공유 (setAttribute)
-		req.setAttribute("listMemo", listMemo);
-		// 4. 뷰 선택
-		String viewName = null;
-		int statusCode = HttpServletResponse.SC_OK;
-		if (accept.contains("json")) {
-			viewName = "/jsonView.do";
-		} else if (accept.contains("xml")) {
-			viewName = "/xmlView.do";
-		} else if (accept.contains("plain")) {
-			viewName = "/WEB-INF/views/04/plainView.jsp";
-		} else {
-			statusCode = HttpServletResponse.SC_NOT_ACCEPTABLE;
+			return null;
 		}
 
-		if (statusCode == HttpServletResponse.SC_OK) {
-			// 5. 뷰로 이동
-			req.getRequestDispatcher(viewName).forward(req, resp);
-		} else {
-			resp.sendError(statusCode);
-		}
+		List<MemoVO> listMemo = dao.selectMemoList();
+		req.setAttribute("listMemo", listMemo);
+		return "forward:/jsonView.do";
 
 	}
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	@RequestMapping(value="/memo", method=RequestMethod.POST)
+	public String doPost(HttpServletRequest req
+			) throws ServletException, IOException {
 		// Post-Redirect-Get : PRG pattern
 		MemoVO memo = getMemoFromRequest(req);
 		dao.insertMemo(memo);
-
-		// 추가된 메모를 포함해서 list를 출력하기 위해
-		resp.sendRedirect(req.getContextPath() + "/memo");
+		return "redirect:/memo";
 	}
 
 	private MemoVO getMemoFromRequest(HttpServletRequest req) throws IOException {
@@ -112,14 +99,14 @@ public class MemoControllerServlet extends HttpServlet {
 		return memo;
 	}
 
-	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+	@RequestMapping(value="/memo", method=RequestMethod.PUT)
+	public String doPut(HttpServletRequest req) throws ServletException, IOException {
+		return null;
 	}
 
-	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+	@RequestMapping(value="/memo", method=RequestMethod.DELETE)
+	public String doDelete(HttpServletRequest req) throws ServletException, IOException {
+		return null;
 	}
 
 }

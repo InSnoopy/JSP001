@@ -19,25 +19,29 @@ import org.slf4j.LoggerFactory;
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.mvc.annotation.RequestMethod;
+import kr.or.ddit.mvc.annotation.resolvers.RequestParam;
+import kr.or.ddit.mvc.annotation.stereotype.Controller;
+import kr.or.ddit.mvc.annotation.stereotype.RequestMapping;
 import kr.or.ddit.mvc.view.InternalResourceViewResolver;
 import kr.or.ddit.validate.DeleteGroup;
 import kr.or.ddit.validate.ValidationUtils;
 import kr.or.ddit.vo.MemberVO;
 
 
-@WebServlet("/member/memberDelete.do")
-public class MemberDeleteControllerServlet extends HttpServlet {
-   
-   private static final Logger log = LoggerFactory.getLogger(MemberDeleteControllerServlet.class);
+@Controller
+public class MemberDeleteController{
+
    private MemberService service = new MemberServiceImpl();
-   @Override
-   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//      1.
-      HttpSession session = req.getSession();
+   
+   @RequestMapping(value="/member/memberDelete.do", method=RequestMethod.POST)
+   public String memberDelete(
+   			@RequestParam("memPass") String memPass
+		   , HttpServletRequest req   
+		   , HttpSession session
+	   ) {
       MemberVO authMember = (MemberVO)session.getAttribute("authMember");
       String memId = authMember.getMemId();
-      
-      String memPass = req.getParameter("memPass");
       
       MemberVO inputDate = new MemberVO();
       inputDate.setMemId(memId);
@@ -70,6 +74,7 @@ public class MemberDeleteControllerServlet extends HttpServlet {
          viewName = "redirect:/mypage.do";
       }
       
-      new InternalResourceViewResolver("/WEB-INF/views/",".jsp").resolveView(viewName, req, resp);
+      return viewName;
+      
    }
 }

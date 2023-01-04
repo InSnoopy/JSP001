@@ -99,6 +99,7 @@
 		    MEM_MEMORIALDAY, 
 		    MEM_MILEAGE,                                            
 		    MEM_DELETE,
+		    MEM_ROLE,
 		    
 		    PROD_ID,
 		    PROD_NAME,

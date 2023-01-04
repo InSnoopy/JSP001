@@ -80,8 +80,8 @@
 <%-- ${requestScope} --%>
 <script type="text/javascript">
 // 	$("[name=searchType]").val("${pagingVO.simpleCondition.searchType}");
-	$("[name=searchType]").val("${searchvO.searchType}"); 	// searchvO로 변경해준다. coc 사용?
-	$("[name=searchWord]").val("${searchvO.searchWord}");
+	$("[name=searchType]").val("${searchVO.searchType}"); 	// searchvO로 변경해준다. coc 사용?
+	$("[name=searchWord]").val("${searchVO.searchWord}");
 	
 	let searchForm = $("#searchForm");
 	let searchUI = $("#searchUI").on("click", "#searchBtn", function(){

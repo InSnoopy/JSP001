@@ -47,12 +47,6 @@ public class ProdListController{
 			throw new ServletException(e);
 		}
 
-
-//		int currentPage = 1;
-//		if (StringUtils.isNumeric(pageParam)) {
-//			currentPage = Integer.parseInt(pageParam);
-//		}
-
 		PagingVO<ProdVO> pagingVO = new PagingVO<>(5, 2);
 		pagingVO.setCurrentPage(currentPage);
 		pagingVO.setDetailCondition(detailCondition);

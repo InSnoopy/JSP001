@@ -13,5 +13,4 @@ public class IndexController{
 		req.setAttribute("contentPage", "/WEB-INF/views/index.jsp");
 		return "layout";
 	}
-	
 }

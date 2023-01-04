@@ -18,38 +18,46 @@ import org.apache.commons.beanutils.BeanUtils;
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
+import kr.or.ddit.mvc.annotation.RequestMethod;
+import kr.or.ddit.mvc.annotation.resolvers.ModelAttribute;
+import kr.or.ddit.mvc.annotation.stereotype.Controller;
+import kr.or.ddit.mvc.annotation.stereotype.RequestMapping;
 import kr.or.ddit.mvc.view.InternalResourceViewResolver;
 import kr.or.ddit.validate.InsertGroup;
 import kr.or.ddit.validate.UpdateGroup;
 import kr.or.ddit.validate.ValidationUtils;
 import kr.or.ddit.vo.MemberVO;
 
-@WebServlet("/member/memberUpdate.do")
-public class MemberUpdateControllerServlet extends HttpServlet{
+@Controller
+public class MemberUpdateController{
 	private MemberService service = new MemberServiceImpl();
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	
+	@RequestMapping(value="/member/memberUpdate.do", method=RequestMethod.GET)
+	public String updateForm(
+			HttpSession session,
+//			@SessionAttribute("authMember") MemberVO authMember, -> 이 어노테이션을 만들어보자
+			HttpServletRequest req){
 		
-		HttpSession session = req.getSession();
 		MemberVO authMember = (MemberVO) session.getAttribute("authMember");
 		MemberVO member = service.retriveMember(authMember.getMemId());
 		req.setAttribute("member", member);
-//		4. 뷰 선택
-		String viewName = "member/memberForm"; // logical view name
-//		5. 뷰로 이동
-		new InternalResourceViewResolver("/WEB-INF/views/", ".jsp").resolveView(viewName, req, resp);
+
+		return "member/memberForm"; // logical view name
 	}
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.setCharacterEncoding("UTF-8");
+	@RequestMapping(value="/member/memberUpdate.do", method=RequestMethod.POST)
+	public String updateProcess(
+			@ModelAttribute("member") MemberVO member,
+			HttpServletRequest req, 
+			HttpServletResponse resp){
 		
-		MemberVO member = new MemberVO();
 		req.setAttribute("member", member);
+
 		try {
 			BeanUtils.populate(member, req.getParameterMap());
 		} catch (IllegalAccessException | InvocationTargetException e) {
-			throw new ServletException(e);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		String viewName = null;
@@ -78,6 +86,6 @@ public class MemberUpdateControllerServlet extends HttpServlet{
 			}
 		}
 		
-		new InternalResourceViewResolver("/WEB-INF/views/", ".jsp").resolveView(viewName, req, resp);
+		return viewName;
 	}
 }

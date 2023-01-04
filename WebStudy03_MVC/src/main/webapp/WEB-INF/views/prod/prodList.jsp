@@ -68,6 +68,7 @@
 					<input type="text" name="prodName" placeholder="상품명"/>
 					<input type="button" id="searchBtn" value="검색" />
 				</div>
+				<input type="button" id="insertBtn" value="등록" />
 			</td>
 		</tr>
 	</tfoot>

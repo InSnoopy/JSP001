@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.CaseUtils;
+import org.apache.commons.text.WordUtils;
 
 /**
  * @ModelAttribute 어노테이션을 가진 command object(not 기본형) 인자 하나를 해결.
@@ -56,7 +57,7 @@ public class ModelAttributeMethodProcessor implements HandlerMethodArgumentResol
 			//CoC (Convention over Configuration)
 			if(StringUtils.isBlank(attrName)) {
 				// parameter의 심플 네임을 가져와서 memberVO이런거 카멜 케이스로 마지막에 만들어준다.
-				attrName = CaseUtils.toCamelCase(parameterType.getSimpleName(), false, ' ');
+				attrName = WordUtils.uncapitalize(parameterType.getSimpleName());
 			}
 			req.setAttribute(attrName, commandObject);
 			// req.setAttribute("member", member);
