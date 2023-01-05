@@ -20,8 +20,10 @@ import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
 import kr.or.ddit.mvc.annotation.RequestMethod;
 import kr.or.ddit.mvc.annotation.resolvers.ModelAttribute;
+import kr.or.ddit.mvc.annotation.resolvers.RequestPart;
 import kr.or.ddit.mvc.annotation.stereotype.Controller;
 import kr.or.ddit.mvc.annotation.stereotype.RequestMapping;
+import kr.or.ddit.mvc.multipart.MultipartFile;
 import kr.or.ddit.mvc.view.InternalResourceViewResolver;
 import kr.or.ddit.validate.InsertGroup;
 import kr.or.ddit.validate.UpdateGroup;
@@ -49,18 +51,14 @@ public class MemberUpdateController{
 	public String updateProcess(
 			@ModelAttribute("member") MemberVO member,
 			HttpServletRequest req, 
-			HttpServletResponse resp){
+			HttpServletResponse resp,
+			@RequestPart(value="memImage", required=false) MultipartFile memImage,
+			HttpSession session) throws IOException{
 		
-		req.setAttribute("member", member);
-
-		try {
-			BeanUtils.populate(member, req.getParameterMap());
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		member.setMemImage(memImage);
 
 		String viewName = null;
+		
 		// 검증
 		Map<String, List<String>> errors = new LinkedHashMap<>();
 		req.setAttribute("errors", errors);
@@ -81,6 +79,10 @@ public class MemberUpdateController{
 				viewName = "member/memberForm";
 				break;
 			default:
+				// 수정이 완료되면 session자체를 바로 변경해준다.
+				MemberVO modifiedMember = service.retriveMember(member.getMemId());
+				session.setAttribute("authMember", modifiedMember);
+				
 				viewName = "redirect:/mypage.do";
 				break;
 			}

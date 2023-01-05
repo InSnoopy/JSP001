@@ -4,11 +4,14 @@
 
 
 <h4>WELCOME</h4>
-
+<c:set var="principal" value="${pageContext.request.userPrincipal }"/>
 <!-- authMember의 값이 있다면 로그인이 되어있는 상태를 말한다. -->
 <c:choose>
-	<c:when test="${not empty sessionScope.authMember }">
-		<h4>로그인된 사용자??? : <%=request.getUserPrincipal() %></h4>
+	<c:when test="${not empty principal }">
+		<c:set var="authMember" value="${principal.realMember }"/>
+		<h4>로그인된 사용자??? : ${principal }</h4>
+		프로필이미지:
+		<img src="data:image/*;base64,${authMember.base64MemImg }" />
 		<a href="<c:url value='/mypage.do' />">${authMember.memName }[${authMember.memRole }]님</a>
 		<form name="logoutForm" action="<c:url value='/login/logout.do'/>" method="post"></form>
 		<a href="#" class="logoutBtn">로그아웃</a>

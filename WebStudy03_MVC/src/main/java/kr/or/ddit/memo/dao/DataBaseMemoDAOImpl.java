@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.or.ddit.db.ConnectionFactory;
+import org.apache.commons.dbcp2.ConnectionFactory;
 import kr.or.ddit.vo.MemoVO;
 
 public class DataBaseMemoDAOImpl implements MemoDAO {

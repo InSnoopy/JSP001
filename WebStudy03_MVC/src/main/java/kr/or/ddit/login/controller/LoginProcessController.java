@@ -64,7 +64,7 @@ public class LoginProcessController{
 					saveIdCookie.setMaxAge(maxAge);
 					resp.addCookie(saveIdCookie);
 					session.setAttribute("authMember", member);
-					viewName = "redirect:/";				
+					viewName = "redirect:/";			
 				}else {				
 					session.setAttribute("validId", memId);
 					session.setAttribute("message", "비밀번호 오류");

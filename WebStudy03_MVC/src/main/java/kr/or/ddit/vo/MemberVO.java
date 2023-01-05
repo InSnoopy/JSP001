@@ -1,6 +1,8 @@
 package kr.or.ddit.vo;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.Base64;
 import java.util.List;
 
 import javax.validation.constraints.Email;
@@ -12,6 +14,7 @@ import javax.validation.groups.Default;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import kr.or.ddit.mvc.multipart.MultipartFile;
 import kr.or.ddit.validate.DeleteGroup;
 import kr.or.ddit.validate.InsertGroup;
 import lombok.Data;
@@ -117,5 +120,26 @@ public class MemberVO implements Serializable{
 	
 	// 일반회원인지 운영자인지
 	private String memRole;
+	
+	// 프로필 사진
+	// db에 넣는 이미지
+	private byte[] memImg;
+	// 클라이언트가 주는 이미지
+	private MultipartFile memImage;
+	
+	public void setMemImage(MultipartFile memImage) throws IOException {
+		if(memImage!=null && !memImage.isEmpty()) {
+			this.memImage = memImage;
+			this.memImg = memImage.getBytes();
+		}
+	}
+
+	public String getBase64MemImg() {
+		if(memImg!=null) {
+			return Base64.getEncoder().encodeToString(memImg);
+		}else {
+			return null;
+		}
+	}
 	
 }

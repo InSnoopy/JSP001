@@ -3,10 +3,12 @@ package kr.or.ddit.vo;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.servlet.http.Part;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import kr.or.ddit.mvc.multipart.MultipartFile;
 import kr.or.ddit.validate.UpdateGroup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -49,7 +51,14 @@ public class ProdVO implements Serializable{
 	private String prodOutline;
 	private String prodDetail;
 	@NotBlank
-	private String prodImg;
+	private String prodImg; // PROD 테이블 조회용 프로퍼티
+	
+	// 버전에 따라 타입이 달라진다 그러면 결합력이 발생!
+	// 이 두개의 타입을 공통으로 가질 부모를 만들어준다. MultipartFile (interface)
+//	private Part prodImage; // part로 받기 때문에
+//	private FileItem prodImage;
+	private MultipartFile prodImage;
+	
 	@NotNull
 	@Min(0)
 	private Integer prodTotalstock;

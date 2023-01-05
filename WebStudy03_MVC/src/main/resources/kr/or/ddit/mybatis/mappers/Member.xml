@@ -100,6 +100,7 @@
 		    MEM_MILEAGE,                                            
 		    MEM_DELETE,
 		    MEM_ROLE,
+		    MEM_IMG,
 		    
 		    PROD_ID,
 		    PROD_NAME,
@@ -135,8 +136,9 @@
          , MEM_LIKE
          , MEM_MEMORIAL
          , MEM_MEMORIALDAY
-         , MEM_MILEAGE
-         , MEM_DELETE
+         <if test="memImg neq null and memImg.length gt 0">
+         , MEM_IMG
+         </if>
       ) VALUES (
          #{memId,jdbcType=VARCHAR}
          , #{memPass,jdbcType=VARCHAR}
@@ -155,8 +157,9 @@
          , #{memLike,jdbcType=VARCHAR}
          , #{memMemorial,jdbcType=VARCHAR}
          , TO_DATE(#{memMemorialday,jdbcType=DATE}, 'YYYY-MM-DD')
-         , #{memMileage,jdbcType=NUMERIC}
-         , #{memDelete,jdbcType=VARCHAR}
+         <if test="memImg neq null and memImg.length gt 0">
+         , #{memImg,jdbcType=BLOB}
+         </if>
       )
    </insert>
 
@@ -176,7 +179,10 @@
          MEM_JOB=#{memJob,jdbcType=VARCHAR},
          MEM_LIKE=#{memLike,jdbcType=VARCHAR},
          MEM_MEMORIAL=#{memMemorial,jdbcType=VARCHAR},
-         MEM_MEMORIALDAY=TO_DATE(#{memMemorialday,jdbcType=DATE}, 'YYYY-MM-DD')
+         MEM_MEMORIALDAY=TO_DATE(#{memMemorialday,jdbcType=DATE}, 'YYYY-MM-DD'),
+         <if test="memImg neq null and memImg.length gt 0">         
+         MEM_IMG = #{memImg.jdbcType=BLOB}
+         </if>
       where 
          MEM_ID=#{memId}
    </update>

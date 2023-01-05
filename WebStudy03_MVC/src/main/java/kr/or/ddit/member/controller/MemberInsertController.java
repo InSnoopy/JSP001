@@ -17,8 +17,11 @@ import kr.or.ddit.member.service.MemberService;
 import kr.or.ddit.member.service.MemberServiceImpl;
 import kr.or.ddit.mvc.annotation.RequestMethod;
 import kr.or.ddit.mvc.annotation.resolvers.ModelAttribute;
+import kr.or.ddit.mvc.annotation.resolvers.RequestPart;
 import kr.or.ddit.mvc.annotation.stereotype.Controller;
 import kr.or.ddit.mvc.annotation.stereotype.RequestMapping;
+import kr.or.ddit.mvc.multipart.MultipartFile;
+import kr.or.ddit.mvc.multipart.MultipartHttpServletRequest;
 import kr.or.ddit.validate.InsertGroup;
 import kr.or.ddit.validate.ValidationUtils;
 import kr.or.ddit.vo.MemberVO;
@@ -37,8 +40,15 @@ public class MemberInsertController{
 	public String memberInsert(
 		HttpServletRequest req
 		, @ModelAttribute("member") MemberVO member
-	) throws ServletException {
+		, @RequestPart(value="memImage", required=false) MultipartFile memImage
+	) throws ServletException, IOException {
 	
+		// 위에 @RequestPart 이걸 추가해서 밑에 한줄로 된다.
+//		if(req instanceof MultipartHttpServletRequest) {
+//			MultipartFile memImage = ((MultipartHttpServletRequest) req).getFile("memImage");
+			member.setMemImage(memImage);
+//		}
+		
 		Map<String, List<String>> errors = new LinkedHashMap<>();
 		req.setAttribute("errors", errors);
 		
