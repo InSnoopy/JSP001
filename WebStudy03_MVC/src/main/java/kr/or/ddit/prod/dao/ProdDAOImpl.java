@@ -50,8 +50,12 @@ public class ProdDAOImpl implements ProdDAO{
 
 	@Override
 	public int updateProd(ProdVO prod) {
-		// TODO Auto-generated method stub
-		return 0;
+		try(SqlSession sqlSession = sqlSessionFactory.openSession()){
+			ProdDAO mapperProxy = sqlSession.getMapper(ProdDAO.class);
+			int cnt = mapperProxy.updateProd(prod);
+			sqlSession.commit();
+			return cnt;
+		}
 	}
 	
 

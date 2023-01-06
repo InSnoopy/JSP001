@@ -138,8 +138,10 @@
 					class="text-danger">${errors.prodMileage}</span></td>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="submit" value="저장" /> <input
-					type="reset" value="취소" /></td>
+				<td colspan="2">
+					<input type="submit" value="저장" /> 
+					<input type="reset" value="취소" />
+				</td>
 			</tr>
 		</table>
 	</form>

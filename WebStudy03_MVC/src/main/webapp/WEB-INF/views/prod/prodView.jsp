@@ -42,7 +42,6 @@
 								<a href="${buyerViewURL }">${buyer.buyerName }</a></td>
 							<td>${buyer.buyerCharger }</td>
 							<td>${buyer.buyerAdd1 }</td>
-
 						</tr>
 					</tbody>
 				</table>
@@ -113,6 +112,16 @@
 		<tr>
 			<th>마일리지</th>
 			<td>${prod.prodMileage}</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<c:url value='/prod/prodList.do' var="listURL"/>
+				<a class="btn btn-secondary" href="${listURL }">목록으로</a>
+				<c:url value='/prod/prodUpdate.do' var="updateURL">
+					<c:param name="what" value="${prod.prodId }" />
+				</c:url>
+				<a href="${updateURL }" class="btn btn-primary">상품수정</a>
+			</td>
 		</tr>
 		<tr>
 			<th>구매자목록</th>

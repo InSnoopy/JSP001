@@ -55,22 +55,33 @@ public class ProdInsertController{
 	) throws IOException, ServletException {
 		addAttribute(req);
 		
-
-		if(prodImage!=null && !prodImage.isEmpty()) {
-//			1. 저장
-			String saveFolderURL = "/resources/prodImages";
-			ServletContext application = req.getServletContext();
-			String saveFolderPath = application.getRealPath(saveFolderURL);
-			File saveFolder = new File(saveFolderPath);
-			if(!saveFolder.exists()) 
-				saveFolder.mkdirs();
-			
-//			2. metadata 추출
-			String saveFileName = UUID.randomUUID().toString();
-			prodImage.transferTo(new File(saveFolder, saveFileName));
-//			3. DB 저장 : prodImg
-			prod.setProdImg(saveFileName);
-		}
+		prod.setProdImage(prodImage);
+				
+		
+//		1. 저장
+		String saveFolderURL = "/resources/prodImages";
+		ServletContext application = req.getServletContext();
+		String saveFolderPath = application.getRealPath(saveFolderURL);
+		File saveFolder = new File(saveFolderPath);
+		if(!saveFolder.exists()) 
+			saveFolder.mkdirs();
+		prod.saveTo(saveFolder);
+		
+		// 아래 코드가 위에 코드로 줄여짐
+//		if(prodImage!=null && !prodImage.isEmpty()) {
+////			1. 저장
+//			String saveFolderURL = "/resources/prodImages";
+//			ServletContext application = req.getServletContext();
+//			String saveFolderPath = application.getRealPath(saveFolderURL);
+//			File saveFolder = new File(saveFolderPath);
+//			if(!saveFolder.exists()) 
+//				saveFolder.mkdirs();
+////			2. metadata 추출
+//			String saveFileName = UUID.randomUUID().toString();
+//			prodImage.transferTo(new File(saveFolder, saveFileName));
+////			3. DB 저장 : prodImg
+//			prod.setProdImg(saveFileName);
+//		}
 		
 		
 		Map<String, List<String>> errors = new LinkedHashMap<>();

@@ -38,6 +38,7 @@ public class GeneratePrincipalFilter implements Filter{
 			// 익명객체 생성해서 하는 방법도 있다.
 //			new HttpServletRequestWrapper(req) {
 			// 1번 필터에서 원본 데이터가 온다면 그 이후에는 wrapper로 변질된 데이터로 넘어간다.
+			// getUserPrincipal을 쓰기 위해 req를 변질시킴
 			HttpServletRequest modifiedReq = new HttpServletRequestWrapper(req) {
 				@Override
 				public Principal getUserPrincipal() {

@@ -2,6 +2,9 @@ package kr.or.ddit.member.service;
 
 import java.util.List;
 
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import kr.or.ddit.enumpkg.ServiceResult;
 import kr.or.ddit.exception.UserNotFoundException;
 import kr.or.ddit.login.service.AuthenticateService;
@@ -15,6 +18,8 @@ public class MemberServiceImpl implements MemberService {
 	// 결합력 최상
 	private MemberDAO memberDAO = new MemberDAOImpl();
 	private AuthenticateService authService = new AuthenticateServiceImpl();
+	PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+	
 	@Override
 	public ServiceResult createMember(MemberVO member) {
 		// 아이디 중복으로 인한 실패(PKDUPLICATED), 가입 성공(OK), 가입 실패(FAIL)
@@ -23,6 +28,8 @@ public class MemberServiceImpl implements MemberService {
 			retriveMember(member.getMemId());
 			result = ServiceResult.PKDUPLICATED;
 		}catch (UserNotFoundException e) {
+			String encoded = encoder.encode(member.getMemPass());
+			member.setMemPass(encoded);
 			int cnt = memberDAO.insertMember(member);
 			if(cnt>0) {
 				result = ServiceResult.OK;

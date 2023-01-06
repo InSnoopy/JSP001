@@ -30,7 +30,6 @@ public class MultipartHttpServletRequest extends HttpServletRequestWrapper{
 		parseRequest(request);
 	}
 
-	
 	private void parseRequest(HttpServletRequest request) throws IOException, ServletException {
 		fileMap = new LinkedHashMap<>();
 		request.getParts().stream()

@@ -59,6 +59,13 @@ public class ProdDAOImplTest {
 		assertNotEquals(0, cnt);
 	}
 	
+	@Test
+	public void testUpdateProd() {
+		prod.setProdCost(23222);
+		int cnt = dao.updateProd(prod);
+		assertNotEquals(0, cnt);
+	}
+	
 //	@Test
 //	public void test() {
 ////		prod = new ProdVO();

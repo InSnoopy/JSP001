@@ -44,7 +44,15 @@ public class ProdServiceImpl implements ProdService{
 	@Override
 	public ServiceResult modifyProd(ProdVO prod) {
 		// 존재하지 않는 경우, RuntimeException 발생, 성공(OK), 실패(FAIL)
-		return null;
+		retriveProd(prod.getProdId()); // 존재하지 않는 경우
+		ServiceResult result = null;
+		int cnt = prodDAO.updateProd(prod);
+		if(cnt>0) {
+			result = ServiceResult.OK;
+		}else {
+			result = ServiceResult.FAIL;
+		}
+		return result;
 	}
 
 }
