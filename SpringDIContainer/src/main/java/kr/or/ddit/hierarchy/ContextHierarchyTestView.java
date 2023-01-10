@@ -9,12 +9,12 @@ import kr.or.ddit.sample.service.SampleService;
 
 public class ContextHierarchyTestView {
 	public static void main(String[] args) {
-		ConfigurableApplicationContext parent = 
+		ConfigurableApplicationContext parent =
 				new ClassPathXmlApplicationContext("kr/or/ddit/sample/conf/Parent-Context.xml");
-		ConfigurableApplicationContext child = 
+		ConfigurableApplicationContext child =
 				new ClassPathXmlApplicationContext(
-					new String[] {"kr/or/ddit/sample/conf/Sample-context.xml"},
-					parent
+					new String[] {"kr/or/ddit/sample/conf/Sample-context.xml"}
+					, parent
 				);
 		child.registerShutdownHook();
 		parent.registerShutdownHook();
@@ -22,10 +22,21 @@ public class ContextHierarchyTestView {
 		SampleService service = child.getBean(SampleService.class);
 		System.out.println(service.retrieveInformation("PK_2"));
 		
-		Map<String, String> oracleDB = (Map) child.getBean("oracleDB");
+		Map<String, String> oracleDB =(Map) child.getBean("oracleDB");
 		System.out.println(oracleDB);
 		
-//		SampleService service2 = parent.getBean(SampleService.class); // error 부모 객체에서는 자식꺼를 못 가져온다.
-
+		SampleService service2 = parent.getBean(SampleService.class);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+

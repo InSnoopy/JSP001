@@ -18,7 +18,7 @@ public class VariousDIVO {
 	private char ch;
 	private String str;
 	
-	private File fileSystemFile;
+	private File fileSytemFile;
 	private File classPathFile;
 	
 	public void init() {
@@ -28,3 +28,16 @@ public class VariousDIVO {
 		log.info("{} 객체 소멸", getClass().getSimpleName());
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

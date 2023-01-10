@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+<!-- 어디 (where : Appender), 어떤 형식(how pattern : layout pattern), 뭘(what : message), 누가(who : logger) -->
+<!-- appender -->
+<!-- logger -->
+<!-- layout -->
+<!-- level : 메시지 이벤트 등급 : debug, info, warn, error, fatal -->
+  <Appenders>
+  	<!-- console에다가 출력한다. -->
+    <Console name="Console" target="SYSTEM_OUT">
+      <!-- 어떤 형태로 출력할 것이다. -->
+      <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    </Console>
+  </Appenders>
+  <Loggers>
+   	<Logger name="jdbc.resultsettable" level="debug" additivity="false">
+      <AppenderRef ref="Console"/>
+    </Logger>
+   	<Logger name="jdbc.sqltiming" level="debug" additivity="false">
+      <AppenderRef ref="Console"/>
+    </Logger>
+	<!-- additivity은 중복되는 건 출력 안하게 설정함 -->
+	<!-- <Logger name="kr.or.ddit.memo.dao.MemoDAO.selectMemoList" level="debug" additivity="false"> -->
+	<!-- 위에는 너무 자세히 적어놔서 list만 출려된다. -->
+    <Logger name="kr.or.ddit" level="info" additivity="false">
+      <AppenderRef ref="Console"/>
+    </Logger>
+    <Logger name="org.springframework" level="info" additivity="false">
+      <AppenderRef ref="Console"/>
+    </Logger>
+  	<!-- 여기 등록된 등급보다 낮은 등급은 안보여준다. -->
+  	<!-- 이 설정은 상속 받는다. -->
+    <Root level="error">
+      <AppenderRef ref="Console"/>
+    </Root>
+  </Loggers>
+</Configuration>

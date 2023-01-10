@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	<!-- annotation 기반으로 등록과 의존 관계(주입) 설정 -->
+	<!-- anootation을 쓸꺼다~ -->
+	<context:annotation-config />
+	
+	<!-- 어떤 패키지로 상대로 할거냐.. -->
+	<context:component-scan base-package="kr.or.ddit.sample" use-default-filters="false"> <!-- false는 filter를 다 없애는 기능 -->
+		<!-- 필터링이 가능 -->
+		<!-- 어노테이션 등록 Component를 등록하니 모든게 다 들어온다. -->
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Component"/>
+		<!-- Controller는 빼고 싶다.~ -->
+<!-- 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/> -->
+		<!-- 상하위 컨테이너에서 빈을 넣고 뺼 수 있다. -->
+		<!-- 모델에서는 service, component, Repository는 상위에서 써야하고 -->
+		<!-- Controller는 하위에서 써야한다. 이떄 쓰는게 include, exclude이다. -->
+	</context:component-scan>
+
+<!-- 	bean 등록 시 사용 가능한 어노테이션 -->
+<!-- 	어노테이션의 대상이 사람 + 시스템 -> 밑에 여러개의 어노테이션은 다 똑같이 bean에 등록되는건 똑같다.  -->
+<!-- 	@Component : 범용 유틸리티 bean 등록, 대부분의 어노테이션에 메타 어노테이션으로 활용됨.(exclude)로 이걸 넣으면 모든 어노테이션이 다 없어진다. -->
+<!-- 	@Repository : Persistence Layer bean 등록 -->
+<!-- 	@Service : Business Logic Layer bean 등록 -->
+<!-- 	@Controller(*) : Controller Layyer bean 등록 , HandlerMapping 에 의해 수집되는 bean.-->
+	
+<!-- 	@Configuration // 자바 설정에다가 쓰이는? -->
+	
+<!-- 	@ControllerAdvice  -->
+	
+<!-- 	@RestController // 웹에서만 사용된다. -->
+<!-- 	@RestControllerAdvice -->
+
+<!-- 	의존성 주입을 위한 어노테이션 -->
+<!-- 	@Resource : id, type 등의 주입 조건을 명시적으로 설정 가능. -->
+<!-- 	@AutoWired : type(class) 을 기준으로 주입, 동일 타입의 빈이 두개 이상 존재하면 예외 발생. 프레임워크 종속성 발생-->
+	
+<!-- 	@Inject : @AutoWired 와 유사하게 동작하나, 대부분의 범용 프레임워크에서 활용 가능함. -->
+<!-- 	@Required -->
+</beans>

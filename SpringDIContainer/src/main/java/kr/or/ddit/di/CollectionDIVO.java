@@ -1,6 +1,5 @@
 package kr.or.ddit.di;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -20,5 +19,15 @@ public class CollectionDIVO {
 	
 	private Properties props;
 	
-	private String[] array; 
+	private String[] array;
 }
+
+
+
+
+
+
+
+
+
+

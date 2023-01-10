@@ -7,11 +7,19 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>src/main/resources/kr/or/ddit/sample/conf/Sample-context.xml</config>
-		<config>src/main/resources/kr/or/ddit/sample/conf/Parent-Context.xml</config>
+		<config>java:kr.or.ddit.memo.conf.MemoContextConfiguration</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
 	<configSets>
+		<configSet>
+			<name><![CDATA[MemoConfig]]></name>
+			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
+			<incomplete>false</incomplete>
+			<configs>
+			</configs>
+			<profiles>
+			</profiles>
+		</configSet>
 	</configSets>
 </beansProjectDescription>

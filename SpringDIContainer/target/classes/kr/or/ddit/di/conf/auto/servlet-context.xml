@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<!-- 1. 어노테이션 쓸수 있어야해 -->
+	<!-- 2. 어노테이션으로 빈 등록 해야함 -->
+	<!-- 3. 상위 중복 등록 x -->
+	<!-- 4. 그러나 컨트롤러는 여기에 등록되어야 한다. -->
+
+	<context:annotation-config>
+	<!-- use-default로 빼는 이유는 상위에 있는거랑 겹치기 때문이다. -->
+	<context:component-scan base-package="kr.or.ddit.memo" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	</context:annotation-config>
+
+</beans>
