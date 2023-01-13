@@ -5,12 +5,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<jsp:include page="/includee/preScript.jsp" flush="false"></jsp:include>
+<jsp:include page="/includee/preScript.jsp" flush="false"/>
 </head>
 <body>
 <div class="container">
-	<jsp:include page='<%=(String)(request.getAttribute("contentPage")) %>'/>
+	<jsp:include page='${contentPage }' />
 </div>
-<jsp:include page="/includee/postScript.jsp" flush="false"></jsp:include>
+<jsp:include page="/includee/postScript.jsp" flush="false"/>
 </body>
 </html>

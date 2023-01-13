@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 사용할 DAO의 퀄러파이트 네임을 따라가야한다. -->
+<mapper namespace="kr.or.ddit.memo.dao.MemoDAO">
+	<select id="selectMemoList" resultType="MemoVO">
+		SELECT code, writer, content, "DATE"
+		FROM tbl_memo
+	</select>
+	
+	<insert id="insertMemo" parameterType="MemoVO">
+		INSERT INTO tbl_memo (
+			code, writer, content
+		)VALUES( MEMO_SEQ.NEXTVAL , #{writer} , #{content})
+	</insert>
+	
+	<!-- #{}안에 자동으로 MemoVO의 정보를 가져올 수 있는 이유가 리플렉션이 작용된다. -->
+	<!-- get을 사용하는것이다. -->
+	<update id="updateMemo" parameterType="MemoVO">
+		UPDATE tbl_memo
+		SET            
+		WRITER = #{writer},    
+		CONTENT = #{content}    
+		WHERE CODE = #{code}
+	</update>
+	
+	<!-- 여기서는 {}안에 자동으로 안들어간다. -->
+	<!-- 이런경우 Param으로 셋팅하면 생긴다. -->
+	<delete id="deleteMemo" parameterType="int">
+		DELETE FROM tbl_memo
+		WHERE CODE = #{code}
+	</delete>
+</mapper>

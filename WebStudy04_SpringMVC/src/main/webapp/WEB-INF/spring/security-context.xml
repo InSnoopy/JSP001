@@ -4,8 +4,9 @@
 	xmlns:c="http://www.springframework.org/schema/c"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	
-	<!--  = PasswordEncoderFactories.createDelegatingPasswordEncoder(); -->
+
+<!--  = PasswordEncoderFactories.createDelegatingPasswordEncoder(); -->
+
 	<bean id="passwordEncoder" class="org.springframework.security.crypto.factory.PasswordEncoderFactories" 
 		factory-method="createDelegatingPasswordEncoder"
 	/>

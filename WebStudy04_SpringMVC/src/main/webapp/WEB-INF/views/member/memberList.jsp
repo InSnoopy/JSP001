@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>member/memberList.do</title>
 <jsp:include page="/includee/preScript.jsp" />
 </head>
 <body>
 <h4>회원목록 조회</h4>
 
-<table>
-	<thead>
+<table class="table table-bordered">
+	<thead class="thead-dark">
 		<tr>
 			<th>일련번호</th>
 			<th>회원아이디</th>
@@ -25,24 +25,24 @@
 		</tr>
 	</thead>
 	<tbody>
-		<c:set var="list" value="${pagingVO.dataList }" />
+		<c:set var="memberList" value="${pagingVO.dataList }" />
 		<c:choose>
-			<c:when test="${not empty list }">
-				<c:forEach items="${list }" var="memberVO">
+			<c:when test="${not empty memberList }">
+				<c:forEach items="${memberList }" var="member">
 					<tr>
-						<td>${memberVO.rnum }</td>
-						<td>${memberVO.memId }</td>
+						<td>${member.rnum }</td>
+						<td>${member.memId }</td>
 						<td>
 							<c:url value="/member/memberView.do" var="viewURL">
-								<c:param name="who" value="${memberVO.memId }"></c:param>
+								<c:param name="who" value="${member.memId }"/>
 							</c:url>
-							<a href="${viewURL }">${memberVO.memName }</a>
+							<a href="${viewURL }">${member.memName }</a>
 						</td>
-						<td>${memberVO.memMail }</td>
-						<td>${memberVO.memHp }</td>
-						<td>${memberVO.memAdd1 }</td>
-						<td>${memberVO.memMileage }</td>
-						<td>${memberVO.cartCount }</td>
+						<td>${member.memMail }</td>
+						<td>${member.memHp }</td>
+						<td>${member.memAdd1 }</td>
+						<td>${member.memMileage }</td>
+						<td>${member.cartCount }</td>
 					</tr>
 				</c:forEach>
 			</c:when>
@@ -70,17 +70,15 @@
 		</tr>
 	</tfoot>
 </table>
-
 <h4>Hidden Form</h4>
 <form id="searchForm">
 	<input type="text" name="page" />
 	<input type="text" name="searchType" />
 	<input type="text" name="searchWord" />
 </form>
-<%-- ${requestScope} --%>
+
 <script type="text/javascript">
-// 	$("[name=searchType]").val("${pagingVO.simpleCondition.searchType}");
-	$("[name=searchType]").val("${searchVO.searchType}"); 	// searchvO로 변경해준다. coc 사용?
+	$("[name=searchType]").val("${searchVO.searchType}");
 	$("[name=searchWord]").val("${searchVO.searchWord}");
 	
 	let searchForm = $("#searchForm");
@@ -94,7 +92,6 @@
 		searchForm.submit();
 	});
 	
-	
 	$("a.paging").on("click", function(event){
 		event.preventDefault();
 		let page = $(this).data("page");
@@ -107,3 +104,22 @@
 <jsp:include page="/includee/postScript.jsp" />
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

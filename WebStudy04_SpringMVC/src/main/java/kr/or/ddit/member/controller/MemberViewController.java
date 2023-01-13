@@ -1,9 +1,5 @@
 package kr.or.ddit.member.controller;
 
-import java.io.IOException;
-
-import javax.inject.Inject;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,23 +12,54 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Controller
 public class MemberViewController{
-	@Inject
 	private final MemberService service;
 	
-//	void 리턴 타입으로 logical view name이 생략된 경우,
-//	HandlerAdapter는 RequestToViewNameTranslator를 이용해 view를 검색함.
+//	void 리턴 타입으로 logical view name 이 생략된 경우,
+//	HandlerAdapter 는 RequestToViewNameTranslator 를 이용해 view 를 검색함.
+	
 	@RequestMapping("/member/memberView.do")
-	public void process(
+	public void memberView(
 		@RequestParam(value="who", required=true) String memId
-		,Model model
-	) throws IOException{
-
-		MemberVO member = service.retriveMember(memId);
-
+		, Model model
+	) {
+//		1. 
+//		String memId = req.getParameter("who");
+//		if(StringUtils.isBlank(memId)) {
+//			resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+//			return null;
+//		}
+//		2. 
+		MemberVO member = service.retrieveMember(memId);
+//		3. 
 		model.addAttribute("member", member);
-
-//		String viewName = "/member/memberView";
-//
+//		4.
+//		String viewName = "member/memberView";
+//		
 //		return viewName;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

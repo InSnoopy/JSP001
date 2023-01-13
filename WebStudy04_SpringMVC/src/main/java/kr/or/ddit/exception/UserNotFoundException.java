@@ -1,11 +1,9 @@
 package kr.or.ddit.exception;
 
 /**
- * 인증 처리에서 사용할 커스텀 예(해당 사용자가 존재하지 않을때 발생시킴)
- * 
+ * 인증 처리에서 사용할 커스텀 예외(해당 사용자가 존재하지 않을때 발생시킴)
+ *
  */
-
-// check, uncheck인지 상위를 결정
 public class UserNotFoundException extends RuntimeException{
 
 	public UserNotFoundException() {
@@ -13,23 +11,24 @@ public class UserNotFoundException extends RuntimeException{
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserNotFoundException(String arg0, Throwable arg1, boolean arg2, boolean arg3) {
-		super(arg0, arg1, arg2, arg3);
+	public UserNotFoundException(String message, Throwable cause, boolean enableSuppression,
+			boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserNotFoundException(String arg0, Throwable arg1) {
-		super(arg0, arg1);
+	public UserNotFoundException(String message, Throwable cause) {
+		super(message, cause);
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserNotFoundException(String arg0) {
-		super(arg0);
+	public UserNotFoundException(String message) {
+		super(message);
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserNotFoundException(Throwable arg0) {
-		super(arg0);
+	public UserNotFoundException(Throwable cause) {
+		super(cause);
 		// TODO Auto-generated constructor stub
 	}
 	
