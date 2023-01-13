@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.ddit.board.dao.BoardDAO">
+	<sql id="searchFrag">
+		<where>
+			<if test="simpleCondition neq null and @org.apache.commons.lang3.StringUtils@isNotBlank(simpleCondition.searchWord)">
+				<choose>
+					<!-- view에 옵션으로 선택한 값 'writer' -->
+					<when test="simpleCondition.searchType eq 'writer'">
+						INSTR(BO_WRITER, #{simpleCondition.searchWord}) > 0
+					</when>
+					<when test="simpleCondition.searchType eq 'content'">
+						INSTR(BO_CONTENT, #{simpleCondition.searchWord}) > 0
+					</when>
+					<otherwise>
+						INSTR(BO_WRITER, #{simpleCondition.searchWord}) > 0
+						OR
+						INSTR(BO_CONTENT, #{simpleCondition.searchWord}) > 0
+					</otherwise>
+				</choose>
+			</if>
+		 </where>
+	</sql>
+
+	<select id="selectTotalRecord" parameterType="kr.or.ddit.vo.PagingVO" resultType="int">
+		SELECT COUNT(*)
+		FROM FREEBOARD
+		<include refid="searchFrag" />
+	</select>
+	
+	<select id="selectBoardList" parameterType="kr.or.ddit.vo.PagingVO" resultType="kr.or.ddit.board.vo.BoardVO">
+
+         WITH ORDEREDBOARD AS (
+            SELECT BO_NO, BO_TITLE, BO_WRITER, BO_MAIL, BO_DATE, BO_HIT
+                , (
+                    SELECT COUNT(ATT_NO)
+                    FROM ATTATCH
+                    WHERE ATTATCH.BO_NO = FREEBOARD.BO_NO
+                ) ATT_COUNT
+            FROM FREEBOARD
+           	<include refid="searchFrag" />
+            ORDER BY BO_NO DESC
+        )
+        SELECT A.*
+        FROM (
+            SELECT ROWNUM RNUM, ORDEREDBOARD.*
+            FROM ORDEREDBOARD
+        ) A
+        WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
+	
+	
+
+
+</mapper>

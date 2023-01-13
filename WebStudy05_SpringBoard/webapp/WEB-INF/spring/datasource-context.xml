@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+	<util:properties id="dbInfo" location="classpath:kr/or/ddit/db/dbInfo.properties" />
+	<!-- 데이터 베이스와 커넥션이 필요한 데이터 소스 -->
+	<!-- 커넥션 풀링 역할 -->
+	<!-- db의 정보, 풀링의 정책에 대한 정보 -->
+	<!-- 위에 dbInfo 먼저 접속, bean을 이용해서 db와 연결 -->
+	<!-- 이건 마이바티스 설정 파일에 있었다. -->
+	<!-- 마이바티스에 있던걸 다 스프링 환경설정으로 다 옮겼다. -->
+	<!-- dataSource 빈 등록 커넥션이 필요하면 이것만 가져가면 된다. -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" 
+		p:driverClassName="#{dbInfo.driverClassName}"
+		p:url="#{dbInfo.url}"
+		p:username="#{dbInfo.user}"
+		p:password="#{dbInfo.password}"
+		
+		p:initialSize="#{dbInfo.initialSize}"
+		p:maxTotal="#{dbInfo.maxTotal}"
+		p:maxIdle="#{dbInfo.maxIdle}"
+		p:maxWaitMillis="#{dbInfo.maxWait}"
+	/>
+	
+	<!-- 마이바티스가 트렌젝션 관리한것도 옮겼다. -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" 
+		p:dataSource-ref="dataSource"
+	/>
+	
+	<!-- 카멜케이션, 하나 등록함. -->
+	<bean id="configuration" class="org.apache.ibatis.session.Configuration" 
+		p:mapUnderscoreToCamelCase="true"
+	/>
+
+	<!-- 마이바티스 유틸스를 없앴고 이걸 대신할 녀석이 이거다. -->
+	<!-- sql세션 팩토리 역할 -->
+	<!-- 안에 생성되는 객체가 등록된다. -->
+	<!-- 밑에 위치에 있는 mapper는 다 동작된다. -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" 
+		p:dataSource-ref="dataSource"
+		p:mapperLocations="classpath:kr/or/ddit/mybatis/mappers/*.xml"
+		p:typeAliasesPackage="kr.or.ddit.vo,kr.or.ddit.*.vo"
+		p:configuration-ref="configuration"
+	/>
+	
+	<!-- 맵핑 파일의 위치, 정보를 여기서 가져옴. -->
+	<!-- mapping 파일이 하나라도 잘못되면 오류난다. -->
+	<!-- dao를 단일적으로 작동 잘되는지 확인하고 합치자. -->
+	<mybatis-spring:scan base-package="kr.or.ddit.*.dao"
+		annotation="org.apache.ibatis.annotations.Mapper"
+		factory-ref="sqlSessionFactory"
+	/>
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
