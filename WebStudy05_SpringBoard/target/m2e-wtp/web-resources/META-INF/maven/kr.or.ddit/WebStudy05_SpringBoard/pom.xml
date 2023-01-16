@@ -67,6 +67,14 @@
 			<version>2.0.7</version>
 		</dependency>
 
+		<!-- 트랜잭션 관리용 (AOP 지원) -->
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>1.9.19</version>
+		    <scope>runtime</scope>
+		</dependency>
+
 		<!-- 암호화 지원 -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -80,6 +88,8 @@
 			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
+		
+		<!-- View Layer 지원용 -->
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
@@ -90,6 +100,11 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.tiles</groupId>
+		  <artifactId>tiles-jsp</artifactId>
+		  <version>3.0.8</version>
 		</dependency>
 
 

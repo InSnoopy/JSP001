@@ -9,7 +9,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
 
-<!-- 	HandlerMapping, HandlerAdapter, ViewResolver, Validator
+	<!-- HandlerMapping, HandlerAdapter, ViewResolver, Validator
 		 등의 MVC 프로그래밍 모델에서 사용될 전략 객체들이 자동 등록됨. -->
 	<mvc:annotation-driven validator="validator"></mvc:annotation-driven>
 	
@@ -22,6 +22,7 @@
 		p:validationMessageSource-ref="messageSource"
 	/>
 	
+	<!-- 맨 마지막 순서로 해야한다. ( 뒤로 안넘김 이친구는 ) -->
 	<bean id="IRVR" class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
 		p:prefix="/WEB-INF/jsp/"
 		p:suffix=".jsp"
@@ -33,8 +34,17 @@
 	
 	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 	
-	<!-- 	Controller layer 를 bean 으로 등록하기 위한 필터링 설정 -->
+	<!-- Tiles Context 형성 -->
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer" 
+		p:definitions="/WEB-INF/tiles/*-definitions.xml"
+		p:preparerFactoryClass="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory"
+	/>
 	
+	<bean id="TVR" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" 
+		p:order="2"
+	/>
+	
+	<!-- 	Controller layer 를 bean 으로 등록하기 위한 필터링 설정 -->
 	<context:component-scan base-package="kr.or.ddit" use-default-filters="false">
 		<context:include-filter type="annotation" 
 					expression="org.springframework.stereotype.Controller"/>
@@ -61,6 +71,9 @@
 	</mvc:interceptors>
 	<!-- 정적 자원이 일괄 관리 되는 경우 활용. -->
 	<mvc:resources location="/resources/" mapping="/resources/**" cache-period="0" />
+	
+	<!-- Custom view preparer -->
+	<bean id="boardViewPreparer" class="kr.or.ddit.board.view.preparer.BoardViewPreparer"/>
 </beans>
 
 

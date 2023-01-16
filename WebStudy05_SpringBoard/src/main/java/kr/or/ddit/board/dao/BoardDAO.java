@@ -3,12 +3,18 @@ package kr.or.ddit.board.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import kr.or.ddit.board.vo.BoardVO;
 import kr.or.ddit.vo.PagingVO;
 
 @Mapper
 public interface BoardDAO {
+	/**
+	 * 게시판 작성
+	 * @param board
+	 * @return 등록된 레코드 수 (rowcnt) > 0 : 성공, <= 0 : 실패 
+	 */
 	public int insertBoard(BoardVO board);
 	
 	/**
@@ -25,7 +31,19 @@ public interface BoardDAO {
 	 */
 	public int selectTotalRecord(PagingVO<BoardVO> pagingVO);
 	
-	public BoardVO selectBoard(int boNo);
+	/**
+	 * 게시판 조회
+	 * @param boNo
+	 * @return BoardVO
+	 */
+	public BoardVO selectBoard(@Param("boNo") int boNo);
+	
+	/**
+	 * 게시판 조회 증가
+	 * @param boNo
+	 */
+	public void incrementHit(int boNo);
+	
 	public int updateBoard(BoardVO board);
 	public int deleteBoard(int boNo);
 }

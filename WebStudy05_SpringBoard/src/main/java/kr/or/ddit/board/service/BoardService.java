@@ -6,6 +6,11 @@ import kr.or.ddit.vo.PagingVO;
 
 
 public interface BoardService {
+	/**
+	 * 게시글 작성
+	 * @param board
+	 * @return 
+	 */
 	public int createBoard(BoardVO board); // enum이 없는 경우 확실하게 int의 값을 주석처리 해줘야한다.
 	public void retrieveBoardList(PagingVO<BoardVO> pagingVO);
 	

@@ -15,15 +15,16 @@ import kr.or.ddit.board.service.BoardService;
 import kr.or.ddit.board.vo.BoardVO;
 import kr.or.ddit.vo.PagingVO;
 import kr.or.ddit.vo.SearchVO;
+import lombok.RequiredArgsConstructor;
 
 
 // /board/boardList.do (검색조건 : 작성자, 글의내용, 전체)
-
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/board")
-public class BoardListController {
-	@Inject
-	private BoardService service;
+public class BoardRetrieveController {
+	
+	private final BoardService service;
 	
 	@RequestMapping("boardList.do")
 	public String boardList(
@@ -39,5 +40,13 @@ public class BoardListController {
 		
 		model.addAttribute("pagingVO", pagingVO);
 		return "board/boardList";
+	}
+	
+	@RequestMapping("boardView.do")
+	public String boardView(@RequestParam("what") int boNo, Model model) {
+		BoardVO board = service.retrieveBoard(boNo);
+		model.addAttribute("board", board);
+		System.out.println("byebye");
+		return "board/boardView";
 	}
 }

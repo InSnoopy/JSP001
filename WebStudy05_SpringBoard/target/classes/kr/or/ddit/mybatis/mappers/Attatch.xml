@@ -1,3 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.or.ddit.board.dao.AttatchDAO"></mapper>
+<mapper namespace="kr.or.ddit.board.dao.AttatchDAO">
+	<insert id="insertAttatches" parameterType="BoardVO">
+		<!-- startAttNo에 넣어준다. -->
+		<selectKey order="BEFORE" resultType="int" keyProperty="startAttNo">
+			SELECT NVL(MAX(ATT_NO), 0)+1
+			FROM ATTATCH
+		</selectKey>
+		INSERT ALL
+		
+		<!-- idx는 몇번 반복되는지 알 수 있다. 시작은 0 -->
+		<foreach collection="attatchList" item="attatch" index="idx">
+			INTO ATTATCH(
+				ATT_SAVENAME
+				, ATT_MIME
+				, ATT_FILESIZE
+				, ATT_FANCYSIZE
+				, ATT_DOWNLOAD
+				, ATT_NO
+				, BO_NO
+				, ATT_FILENAME
+			)VALUES(
+				#{attatch.attSavename,jdbcType=VARCHAR}
+				, #{attatch.attMime,jdbcType=VARCHAR}
+				, #{attatch.attFilesize,jdbcType=NUMERIC}
+				, #{attatch.attFancysize,jdbcType=VARCHAR}
+				, 0
+				, #{startAttNo}+#{idx}
+				, #{boNo,jdbcType=NUMERIC}
+				, #{attatch.attFilename,jdbcType=VARCHAR}
+			)
+			
+			SELECT * FROM DUAL
+			
+		</foreach>
+		
+	</insert>
+</mapper>
