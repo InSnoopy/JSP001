@@ -1,0 +1,81 @@
+<table border="1" cellpadding="1" cellspacing="1" style="width:1000px">
+	<thead>
+		<tr>
+			<th scope="col">팀번호</th>
+			<th scope="col">회의실</th>
+			<th scope="col">회의실 이용 시간</th>
+		</tr>
+		<tr>
+			<th scope="col">ex) TEAM1</th>
+			<th scope="col">ex) 분임토의2실</th>
+			<th scope="col">ex) 14:00~15:00</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th scope="col">TEAM1</th>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<th scope="col">TEAM3</th>
+			<td>316호 회의실</td>
+			<td>15:00 ~ 17:00</td>
+		</tr>
+		<tr>
+			<th scope="col">TEAM4</th>
+			<td>313호 회의실</td>
+			<td>14:00 ~ 17:00</td>
+		</tr>
+		<tr>
+			<th scope="col">&nbsp;</th>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<th scope="col">&nbsp;</th>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<th scope="col">&nbsp;</th>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<th scope="col">&nbsp;</th>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<th scope="col">&nbsp;</th>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<th scope="col">&nbsp;</th>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<th scope="col">&nbsp;</th>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<th scope="col">&nbsp;</th>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<th scope="col">&nbsp;</th>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<th scope="col">&nbsp;</th>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+	</tbody>
+</table>
